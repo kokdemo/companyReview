@@ -32,3 +32,8 @@ main {
   margin: 0;
   width: 100%;
 }
+
+/* line 31, ../sass/screen.scss */
+#shareLink {
+  word-break: break-all;
+}
