@@ -39,8 +39,8 @@
             </div>
         </div>
     </div>
-    <div id="answer" class="row" v-show="start === '2' ">
-        <div class="col s12 m6">
+    <div id="answer" class="container row" v-show="start === '2' ">
+        <div class="col s12">
             <div class="card">
                 <div class="card-content">
                     <h4>结果解读</h4>
@@ -49,16 +49,18 @@
                         <input id="first_name" type="text" class="validate" v-model="companyName">
                         <label for="first_name">公司的名称</label>
                         <a class="waves-effect waves-light green darken-3 btn white-text" v-on="click:makeShareLink()">填写公司名称生成分享链接</a>
+                        <p>{{shareLink}}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="score" class="card blue-grey darken-1" v-show="start !== '0' ">
-        <div class="card-content white-text center-align">
-            <span class="card-title ">{{score}}</span>
+        <div id="score" class="card blue-grey darken-1" v-show="start !== '0' ">
+            <div class="card-content white-text center-align">
+                <span class="card-title ">{{score}}</span>
+            </div>
         </div>
-    </div>
+
 </main>
 <script src="js/jquery.js"></script>
 <script src="js/materialize.min.js"></script>
@@ -74,7 +76,8 @@
             number: 0,
             score: 0,
             answer: '',
-            companyName :''
+            companyName :'',
+            shareLink:''
         },
         filters: {
         },
@@ -110,7 +113,8 @@
                 var url = window.location.href;
                 var que = url.indexOf('?');
                 var host = url.substr(0,que);
-//                var shareLink =
+                var shareLink = host+'?name='+vm.$data.companyName+'&question='+vm.$data.questionText;
+
             }
         }
     });
