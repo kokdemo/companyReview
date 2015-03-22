@@ -96,7 +96,7 @@
         },
         methods: {
             getUrlStr: function (name) {
-                var url = window.location.search;
+                var url = decodeURI(window.location.search);
                 var mark = url.indexOf("?");
                 if (mark != -1) {
                     var str = url.substr(mark + 1, url.length - mark).split("&");
