@@ -12,7 +12,7 @@
 </head>
 <body>
 <main>
-    <div class="section" id="index-banner">
+    <div class="section" id="title">
         <div class="container">
             <div class="row">
                 <div class="col s12">
@@ -28,8 +28,8 @@
                 <a class="waves-effect waves-light btn-large " v-show="start == '0' "
                    v-on="click:startTest() ">Start</a>
                 <div class="row" v-show="start === '1' ">
-                    <a class="waves-effect waves-light green darken-3 btn-large" v-on="click:choose(true)">是</a>
-                    <a class="waves-effect waves-light cyan  darken-3 btn-large" v-on="click:choose(false)">否</a>
+                    <a class="waves-effect waves-light green darken-1 btn-large" v-on="click:choose(true)">是</a>
+                    <a class="waves-effect waves-light cyan  darken-1 btn-large" v-on="click:choose(false)">否</a>
 
                     <div class="progress">
                         <div class="determinate" v-style="width: number*100/question.length + '%'"></div>
@@ -38,10 +38,18 @@
             </div>
         </div>
     </div>
-    <div id="showList">
+    <div id="showList" v-show="start == '3' ">
+        <h4 class="light center-align">
+             {{companyName}}
+        </h4>
         <ul class="collection">
-             <li class="collection-item" v-repeat="que : question" class="showList-{{questionText[$index]}}">{{que.questionText}}</li>
+             <li class="collection-item" v-repeat="que : question" v-class="'showList-'+questionText[$index]">{{que.questionText}}</li>
         </ul>
+        <div class="row">
+            <a class="waves-effect waves-light green darken-1 btn white-text col s4 offset-s1" href="index.html">我也测试一下</a>
+            <a class="waves-effect waves-light blue darken-1 btn white-text col s4 offset-s2" v-on="click:getAnswer()">看一下结果</a>
+        </div>
+
     </div>
     <div id="answer" class="container row" v-show="start === '2' ">
         <div class="col s12">
@@ -52,7 +60,7 @@
                     <div class="input-field">
                         <input id="companyName" type="text" class="validate" v-model="companyName">
                         <label for="companyName">公司的名称</label>
-                        <a class="waves-effect waves-light green darken-3 btn white-text" v-on="click:makeShareLink()">填写公司名并分享</a>
+                        <a class="waves-effect waves-light green darken-3 btn white-text" v-on="click:makeShareLink()">填写公司名生成分享链接</a>
                         <input id="shareLink" type="text" placeholder="分享链接" v-attr="value:shareLink">
                     </div>
                 </div>
@@ -103,13 +111,23 @@
 
             startTest: function () {
                 var companyName = this.getUrlStr('name');
-                var question = this.getUrlStr('question');
-                if (companyName !== undefined && question !== undefined) {
+                var questionText = this.getUrlStr('question');
+                if (companyName !== undefined && questionText !== undefined) {
                     //说明是有内容的，需要解析
+                    $('#title').css('padding', '0px');
                     vm.$data.companyName = companyName;
-                    vm.$data.questionText = question;
+                    vm.$data.questionText = questionText;
+                    console.info(vm.$data.companyName  +  vm.$data.questionText);
+                    vm.$data.start = '3';
+                    for(var i= 0,len=questionText.length;i<len;i++){
+                        if(questionText[i] == '1'){
+                            vm.$data.score += question[i].score;
+                        }
+                    }
+                }else{
+                    vm.$data.start = '1';
                 }
-                vm.$data.start = '1';
+
             },
             choose: function (choose) {
                 if (choose == true) {
@@ -128,8 +146,9 @@
                 }
             },
             getAnswer: function () {
+                vm.$data.start = '2';
                 var score = vm.$data.score;
-                $('#index-banner').css('padding-top', '100px');
+                $('#title').css('padding-top', '100px');
                 for (var i = answer.length - 1; i >= 0; i--) {
                     if (score <= answer[i].score) {
                         vm.$data.answer = answer[i].answer;

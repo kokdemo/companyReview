@@ -7,24 +7,24 @@ html, body {
   height: 100%;
 }
 
-/* line 9, ../sass/screen.scss */
+/* line 10, ../sass/screen.scss */
 main {
   height: 100%;
 }
 
-/* line 13, ../sass/screen.scss */
-#index-banner {
+/* line 14, ../sass/screen.scss */
+#title {
   padding-top: 200px;
 }
 
-/* line 17, ../sass/screen.scss */
+/* line 18, ../sass/screen.scss */
 #button {
   position: fixed;
   width: 100%;
   bottom: 88px;
 }
 
-/* line 23, ../sass/screen.scss */
+/* line 24, ../sass/screen.scss */
 #score {
   position: fixed;
   bottom: 0;
@@ -33,7 +33,25 @@ main {
   width: 100%;
 }
 
-/* line 31, ../sass/screen.scss */
+/* line 32, ../sass/screen.scss */
 #shareLink {
   word-break: break-all;
+}
+
+/* line 36, ../sass/screen.scss */
+#showList ul li.showList-1:before {
+  content: '\2714';
+  margin-right: 10px;
+}
+
+/* line 41, ../sass/screen.scss */
+#showList ul li.showList-0:before {
+  content: '\2716';
+  margin-right: 10px;
+}
+
+/* line 46, ../sass/screen.scss */
+#showList ul li.showList-0 {
+  background: #777;
+  color: #eee;
 }
